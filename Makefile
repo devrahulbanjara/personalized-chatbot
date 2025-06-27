@@ -1,8 +1,7 @@
 install:
 	uv venv
 	. .venv/bin/activate && uv pip install -r requirements.txt
-	. .venv/bin/activate && uv pip install -r requirements-dev.txt || true
-	
+		
 run-loaddoc-streamlit:
 	. .venv/bin/activate && streamlit run load_documents.py
 
