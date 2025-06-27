@@ -1,4 +1,4 @@
-# Personalized Chatbot 🤖
+# Personalized Chatbot
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
@@ -9,7 +9,7 @@
 
 A powerful personalized chatbot system that can be trained on your custom documents. Built with modern Python stack, featuring a FastAPI backend and a Streamlit frontend, powered by Google Gemini's advanced language model.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 personalized-chatbot/
@@ -31,16 +31,16 @@ personalized-chatbot/
 └── requirements.txt    # Project dependencies
 ```
 
-## 🚀 Features
+## Features
 
-- 📚 Document ingestion and processing
-- 🔍 Vector-based document search using ChromaDB
-- 💬 Interactive chat interface
-- 🎯 Context-aware responses using Google Gemini
-- 🔒 Secure API endpoints
-- 🌐 Modern web interface
+- Document ingestion and processing
+- Vector-based document search using ChromaDB
+- Interactive chat interface
+- Context-aware responses using Google Gemini
+- Secure API endpoints
+- Modern web interface
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend Framework**: FastAPI
 - **Frontend**: Streamlit
@@ -51,13 +51,13 @@ personalized-chatbot/
 - **API Documentation**: Swagger UI (via FastAPI)
 - **Dependency Management**: uv + requirements.txt
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Python 3.10+
 - uv package installer
 - Make (for using Makefile commands)
 
-## 🔧 Installation
+## Installation
 
 1. Clone the repository:
 
@@ -93,7 +93,7 @@ personalized-chatbot/
    # Add other required environment variables
    ```
 
-## 🚀 Running the Application
+## Running the Application
 
 ### Running Components Separately
 
@@ -116,13 +116,13 @@ To start both frontend and backend simultaneously:
 make run-all
 ```
 
-## 🌐 Accessing the Application
+## Accessing the Application
 
 - Frontend (Chat Interface): http://localhost:8501
 - Backend API: http://localhost:8000
 - API Documentation: http://localhost:8000/docs
 
-## 🧹 Cleanup
+## Cleanup
 
 To clean up the virtual environment:
 
@@ -130,7 +130,7 @@ To clean up the virtual environment:
 make clean
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -138,11 +138,11 @@ make clean
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## ✨ Acknowledgments
+## Acknowledgments
 
 - FastAPI for the amazing web framework
 - Streamlit for the intuitive UI components
