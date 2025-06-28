@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class ChatbotOrchestrator:
     def __init__(self):
-        self.database_path = "database/chromadb_file"
+        self.database_path = "data/chromadb_file"
         os.makedirs(self.database_path, exist_ok=True)
         self.db_manager = DatabaseManager()
         self.model = ChatbotModel()
