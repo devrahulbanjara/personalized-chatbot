@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class DatabaseManager:
     def __init__(self, db_path=None):
-        self.db_path = db_path or "database/chromadb_file"
+        self.db_path = db_path or "data/chromadb_file"
         os.makedirs(self.db_path, exist_ok=True)
         self.documentstore = DocumentStore()
         self.vector_store = VectorStore(self.db_path)
