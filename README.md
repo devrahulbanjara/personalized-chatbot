@@ -13,8 +13,9 @@ A powerful personalized chatbot system that can be trained on your custom docume
 
 ```
 personalized-chatbot/
-├── app.py                 # Main Streamlit chat interface
-├── data/                  # Data storage directory
+├── app.py                # Main Streamlit chat interface
+├── data/                 # Data storage directory
+│   ├── chromadb_file/    # ChromaDB storage
 ├── database/             # Database related modules
 │   ├── chromadb_file/    # ChromaDB storage
 │   ├── database.py       # Database operations
@@ -140,7 +141,7 @@ make clean
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the GPL 2.0 License - see the LICENSE file for details.
 
 ## Acknowledgments
 
