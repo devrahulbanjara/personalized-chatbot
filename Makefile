@@ -10,7 +10,6 @@ run-backend:
 
 run-all:
 	. .venv/bin/activate && streamlit run app.py &
-	sleep 5
 	. .venv/bin/activate && python -m src.main
 
 clean:
