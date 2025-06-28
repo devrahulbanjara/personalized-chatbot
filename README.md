@@ -17,7 +17,6 @@ personalized-chatbot/
 ├── data/                 # Data storage directory
 │   ├── chromadb_file/    # ChromaDB storage
 ├── database/             # Database related modules
-│   ├── chromadb_file/    # ChromaDB storage
 │   ├── database.py       # Database operations
 │   ├── document_store.py # Document storage logic
 │   └── vector_store.py   # Vector store operations
