@@ -11,3 +11,4 @@ data/
 *.pyc
 .env
 *.log
+vscode/
