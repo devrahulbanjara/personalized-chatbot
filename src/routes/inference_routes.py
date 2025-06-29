@@ -23,3 +23,7 @@ async def chat(request: ChatRequest):
         raise HTTPException(
             status_code=500, detail=f"Error during chat processing: {str(e)}"
         )
+        
+@router.get("/healthz", tags=["Health"])
+async def health_check():
+    return {"status": "ok"}
