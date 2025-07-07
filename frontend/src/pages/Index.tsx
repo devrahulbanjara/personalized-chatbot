@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { MessageSquare, Send, X, User, Bot, Mic } from 'lucide-react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ const Index = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     transcript,
@@ -29,6 +30,15 @@ const Index = () => {
       setInputValue(transcript);
     }
   }, [transcript]);
+
+  useLayoutEffect(() => {
+    if (inputRef.current && listening) {
+      const input = inputRef.current;
+      input.focus();
+      const length = input.value.length;
+      input.setSelectionRange(length, length);
+    }
+  }, [inputValue, listening]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -78,6 +88,13 @@ const Index = () => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    if (listening) {
+      SpeechRecognition.stopListening();
+    }
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -90,7 +107,7 @@ const Index = () => {
       SpeechRecognition.stopListening();
     } else {
       resetTranscript();
-      SpeechRecognition.startListening({ continuous: false });
+      SpeechRecognition.startListening({ continuous: true });
     }
   };
 
@@ -216,8 +233,9 @@ const Index = () => {
         <div className="p-4 border-t border-slate-200/50">
           <div className="flex space-x-2">
             <Input
+              ref={inputRef}
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Ask anything about us and our services"
               className="flex-1 bg-slate-50 border-slate-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-full px-4"
@@ -229,7 +247,9 @@ const Index = () => {
                 onClick={handleListen}
                 disabled={isLoading}
                 className={`w-10 h-10 p-0 rounded-full shrink-0 transition-colors ${
-                  listening ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-slate-200 hover:bg-slate-300'
+                  listening
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : 'bg-slate-200 text-slate-500 hover:bg-slate-300 hover:text-slate-700'
                 }`}
               >
                 <Mic className="w-4 h-4" />
