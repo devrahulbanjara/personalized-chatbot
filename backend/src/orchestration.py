@@ -9,7 +9,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-CHAT_HISTORY_MAX_LENGTH = 10
+CHAT_HISTORY_MAX_LENGTH = 4
 SESSION_TTL_SECONDS = 3600
 
 
