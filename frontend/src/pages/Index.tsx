@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, X, User, Bot } from 'lucide-react';
+import { MessageSquare, Send, X, User, Bot, Mic } from 'lucide-react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -16,6 +17,19 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (transcript) {
+      setInputValue(transcript);
+    }
+  }, [transcript]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -31,6 +45,7 @@ const Index = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
+    resetTranscript();
 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/chat', {
@@ -69,6 +84,20 @@ const Index = () => {
       sendMessage();
     }
   };
+
+  const handleListen = () => {
+    if (listening) {
+      SpeechRecognition.stopListening();
+    } else {
+      resetTranscript();
+      SpeechRecognition.startListening({ continuous: false });
+    }
+  };
+
+  if (!browserSupportsSpeechRecognition) {
+    console.log("Browser doesn't support speech recognition.");
+    // You could render a fallback or disable the mic button here
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden">
@@ -194,6 +223,18 @@ const Index = () => {
               className="flex-1 bg-slate-50 border-slate-200 focus:border-blue-400 focus:ring-blue-400/20 rounded-full px-4"
               disabled={isLoading}
             />
+            {browserSupportsSpeechRecognition && (
+              <Button
+                type="button"
+                onClick={handleListen}
+                disabled={isLoading}
+                className={`w-10 h-10 p-0 rounded-full shrink-0 transition-colors ${
+                  listening ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-slate-200 hover:bg-slate-300'
+                }`}
+              >
+                <Mic className="w-4 h-4" />
+              </Button>
+            )}
             <Button
               onClick={sendMessage}
               disabled={!inputValue.trim() || isLoading}
