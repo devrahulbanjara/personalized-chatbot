@@ -1,151 +1,174 @@
-# Personalized Chatbot
+# Company Specialized Chatbot
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
-[![ChromaDB](https://img.shields.io/badge/ChromaDB-00897B?style=for-the-badge&logo=database&logoColor=white)](https://www.trychroma.com/)
-[![uv](https://img.shields.io/badge/uv-Package%20Installer-blueviolet?style=for-the-badge)](https://github.com/astral-sh/uv)
+[![Groq](https://img.shields.io/badge/Groq-black?style=for-the-badge&logo=google-cloud&logoColor=white)](https://groq.com/)
+[![Llama 3](https://img.shields.io/badge/Llama_3-black?style=for-the-badge&logo=meta&logoColor=white)](https://llama.meta.com/)
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-A powerful personalized chatbot system that can be trained on your custom documents. Built with modern Python stack, featuring a FastAPI backend and a Streamlit frontend, powered by Google Gemini's advanced language model.
+This is a sophisticated, personalized chatbot application powered by a FastAPI backend and a modern React frontend. It features a clean, responsive user interface with voice-to-text capabilities and is designed to provide intelligent, context-aware responses based on a knowledge base of your choice, with ultra-low latency thanks to the Groq LPU™ Inference Engine.
+
+## Features
+
+- **Modern UI**: A beautiful and responsive chat interface built with React, TypeScript, and Shadcn/UI.
+- **Voice-to-Text**: Integrated speech recognition for hands-free interaction using the Web Speech API.
+- **RAG-based Architecture**: The backend utilizes a Retrieval-Augmented Generation (RAG) approach to provide answers from a custom knowledge base.
+- **High-Performance Backend**: Built with FastAPI, ensuring high speed and efficiency.
+- **Asynchronous by Design**: Leverages Python's async capabilities for non-blocking API endpoints.
+- **Clear Project Structure**: A clean separation between the frontend and backend concerns for better maintainability.
+
+## Tech Stack
+
+| Area         | Technology                                                                                         |
+| :----------- | :------------------------------------------------------------------------------------------------- |
+| **Frontend** | React, TypeScript, Vite, Tailwind CSS, Shadcn/UI, Lucide React (icons), `react-speech-recognition` |
+| **Backend**  | Python, FastAPI, Uvicorn, Pydantic, Groq (for Llama 3 LLM), PyMuPDF (for document parsing)         |
+| **Tooling**  | `npm` for frontend package management, `uv` for Python package management, `Make` for automation   |
 
 ## Project Structure
 
 ```
-personalized-chatbot/
-├── app.py                # Main Streamlit chat interface
-├── data/                 # Data storage directory
-│   ├── chromadb_file/    # ChromaDB storage
-├── database/             # Database related modules
-│   ├── database.py       # Database operations
-│   ├── document_store.py # Document storage logic
-│   └── vector_store.py   # Vector store operations
-├── load_documents.py     # Document loading interface
-├── models/              # Model definitions
-├── parser/             # Document parsing utilities
-├── prompts/            # Chatbot prompt templates
-├── src/               # Core application source
-│   ├── main.py        # FastAPI application
-│   ├── orchestration.py # Service orchestration
-│   └── routes/        # API routes
-└── requirements.txt    # Project dependencies
+.
+├── backend/
+│   ├── src/
+│   │   ├── main.py             # FastAPI application entrypoint and middleware
+│   │   ├── orchestration.py    # Core logic for RAG (retrieve, generate response)
+│   │   └── routes/             # API route definitions
+│   ├── pyproject.toml        # Backend dependencies (for uv)
+│   └── requirements.txt      # Alternative dependency file
+└── frontend/
+    ├── src/
+    │   ├── main.tsx            # React application entrypoint
+    │   ├── App.tsx             # Main App component and router setup
+    │   ├── pages/
+    │   │   └── Index.tsx       # The main chat interface component
+    │   ├── components/         # Reusable UI components (Shadcn/UI)
+    │   └── lib/                # Utility functions
+    ├── package.json          # Frontend dependencies and scripts
+    └── vite.config.ts        # Vite configuration
+└── Makefile                # Automation scripts for installation, running, etc.
 ```
 
-## Features
+## Getting Started
 
-- Document ingestion and processing
-- Vector-based document search using ChromaDB
-- Interactive chat interface
-- Context-aware responses using Google Gemini
-- Secure API endpoints
-- Modern web interface
+Follow these instructions to get the project up and running on your local machine.
 
-## Tech Stack
+### Prerequisites
 
-- **Backend Framework**: FastAPI
-- **Frontend**: Streamlit
-- **Language Model**: Google Gemini
-- **Database**: ChromaDB (Vector Store)
-- **Package Management**: uv
-- **Document Processing**: PyMuPDF
-- **API Documentation**: Swagger UI (via FastAPI)
-- **Dependency Management**: uv + requirements.txt
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [Python](https://www.python.org/downloads/) (v3.10 or later)
+- `uv` (Python package installer from Astral). If you don't have it, run:
+  ```bash
+  curl -Ls https://astral.sh/uv/install.sh | sh
+  ```
+- `make` utility (usually pre-installed on Linux and macOS).
 
-## Prerequisites
+### Option 1: Using Make (Recommended)
 
-- Python 3.10+
-- uv package installer
-- Make (for using Makefile commands)
+1.  **Clone the repository:**
 
-## Installation
+    ```bash
+    git clone https://github.com/devrahulbanjara/personalized-chatbot
+    cd personalized-chatbot
+    ```
 
-1. Clone the repository:
+2.  **Install all dependencies:**
+    This single command will set up the backend virtual environment and install all Python and Node.js packages.
 
-   ```bash
-   git clone https://github.com/devrahulbanjara/personalized-chatbot.git
-   cd personalized-chatbot
-   ```
+    ```bash
+    make install
+    ```
 
-2. Install uv (if not already installed):
+3.  **Run the application:**
+    For the best development experience, run the backend and frontend in separate terminals.
 
-   ```bash
-   curl -Ls https://astral.sh/uv/install.sh | sh
-   ```
+    In your first terminal:
 
-3. Set up environment and install dependencies:
+    ```bash
+    make run-backend
+    ```
 
-   ```bash
-   make install
-   ```
+    In your second terminal:
 
-4. Create a `.env` file in the root directory:
+    ```bash
+    make run-frontend
+    ```
 
-   ```bash
-   # Copy and modify with your API keys and configurations
-   touch .env
-   ```
+### Option 2: Manual Installation
 
-   Required environment variables:
+If you prefer not to use `make`, you can follow these steps.
 
-   ```env
-   # Add your API keys and configurations here
-   GEMINI_API_KEY=your_api_key_here
-   # Add other required environment variables
-   ```
+1.  **Clone the repository:**
 
-## Running the Application
+    ```bash
+    git clone <your-repository-url>
+    cd personalized-chatbot
+    ```
 
-### Running Components Separately
+2.  **Setup the Backend:**
+    Navigate to the backend directory, create a virtual environment, and install the dependencies.
 
-1. Start the document loading frontend:
+    ```bash
+    cd backend
+    uv venv         # Create virtual environment
+    source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
+    uv pip install -r requirements.txt
+    ```
 
-   ```bash
-   make run-loaddoc-streamlit
-   ```
+3.  **Setup the Frontend:**
+    In a separate terminal, navigate to the frontend directory and install the dependencies.
+    ```bash
+    cd frontend
+    npm install
+    ```
 
-2. Start the backend server:
-   ```bash
-   make run-backend
-   ```
+### Running the Application
 
-### Running Everything Together
+1.  **Start the Backend Server:**
+    From the `backend` directory (with the virtual environment activated):
 
-To start both frontend and backend simultaneously:
+    ```bash
+    uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    ```
 
-```bash
-make run-all
-```
+    The API will be available at `http://localhost:8000`.
 
-## Accessing the Application
+2.  **Start the Frontend Development Server:**
+    From the `frontend` directory:
+    ```bash
+    npm run dev
+    ```
+    The application will be accessible at `http://localhost:5173` (or another port if 5173 is busy).
 
-- Frontend (Chat Interface): http://localhost:8501
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
+## API Endpoints
 
-## Cleanup
+The backend exposes the following main endpoints:
 
-To clean up the virtual environment:
+- `POST /api/chat`: The main endpoint for sending a user query and receiving a response from the chatbot.
+- `GET /`: A root endpoint to welcome you to the API.
+- `GET /docs`: Access the interactive Swagger UI for API documentation.
 
-```bash
-make clean
-```
+## Makefile Commands
+
+The `Makefile` provides several commands to streamline development:
+
+- `make install`: Installs all dependencies for both frontend and backend.
+- `make run-backend`: Starts the backend server.
+- `make run-frontend`: Starts the frontend development server.
+- `make clean`: Removes all installed dependencies and virtual environments.
+- `make help`: Displays a list of all available commands.
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to open a pull request or submit an issue.
 
-## License
+1.  Fork the repository
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-This project is licensed under the GPL 2.0 License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- FastAPI for the amazing web framework
-- Streamlit for the intuitive UI components
-- Google Gemini for the powerful language model
-- ChromaDB for vector storage capabilities
-- All other open-source contributors
+---
