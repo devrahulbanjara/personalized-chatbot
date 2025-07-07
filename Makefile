@@ -9,7 +9,9 @@ run-frontend:
 	cd frontend && npm run dev
 
 run-loaddoc-streamlit:
+	cd backend && . .venv/bin/activate && python -m src.main & \
 	cd backend && . .venv/bin/activate && streamlit run load_documents.py
+
 
 run-all:
 	cd backend && . .venv/bin/activate && python -m src.main & \
