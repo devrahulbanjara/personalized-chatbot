@@ -1,18 +1,17 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.routes.inference_routes import router as inference_router
+from src.routes.inference_routes import router as inference_router, orchestrator
 from src.routes.load_documents_routes import router as load_documents_router
 import logging
 import sys
+import asyncio
 
-# --- Logging Configuration ---
 log_formatter = logging.Formatter(
     "[%(asctime)s] | [%(levelname)-8s] | [%(name)-25s] | %(message)s"
 )
 logger = logging.getLogger()
 
-# Clear existing handlers to prevent duplicate logs
 if logger.hasHandlers():
     logger.handlers.clear()
 
@@ -22,12 +21,17 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(log_formatter)
 logger.addHandler(stream_handler)
-# -----------------------------
 
 
 app = FastAPI(title="Personal Chatbot API")
 
-# CORS configuration
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("Starting background task for session cleanup...")
+    asyncio.create_task(orchestrator.cleanup_stale_sessions())
+
+
 origins = [
     "http://localhost",
     "http://localhost:8080",
@@ -48,7 +52,7 @@ app.include_router(load_documents_router, prefix="/api", tags=["Document Loading
 
 @app.get("/", tags=["Root"])
 async def read_root():
-    return {"message": "Welcome to the Personal Chatbot API"}
+    return {"message": "Welcome to the the chatbot api made by Rahul Dev Banjara"}
 
 
 if __name__ == "__main__":
