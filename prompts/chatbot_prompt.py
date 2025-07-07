@@ -72,9 +72,6 @@ Relevant Conversation History (Use this to answer if user doesnt specify anythin
 Relevant Knowledge Base:  
 {retrieved_chunks}
 
-User Query:  
-{question}
-
 ---
 
 Now, based on the provided knowledge base and relevant, company-related conversation history, respond to the user's query in a professional, concise, and clear manner.  
