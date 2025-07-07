@@ -1,23 +1,20 @@
 from dotenv import load_dotenv
 import os
-
-from google.genai.types import GenerateContentResponse
+from groq import Groq
 from prompts.chatbot_prompt import PROMPT
-from google import genai
 from collections.abc import Iterable
-
 
 load_dotenv()
 
 class ChatbotModel:
     def __init__(self):
-        self.client = genai.Client()
+        self.client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
         self.history = []
         self.max_history = 3
 
     def format_history(self):
         history_text = ""
-        for user_msg, bot_msg in self.history[-self.max_history :]:
+        for user_msg, bot_msg in self.history[-self.max_history:]:
             history_text += f"User: {user_msg}\nAssistant: {bot_msg}\n"
         return history_text.strip()
 
@@ -38,18 +35,37 @@ class ChatbotModel:
 
         relevant_chunks = self.flatten_chunks(relevant_chunks)
         history_text = self.format_history()
+        
         prompt = PROMPT.format(
             chat_history=history_text,
-            question=query,
             retrieved_chunks="\n".join(relevant_chunks),
         )
 
-        response: GenerateContentResponse = self.client.models.generate_content(
-            model="gemini-2.5-flash-lite-preview-06-17", contents=prompt
+        completion = self.client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {
+                    "role": "system",
+                    "content": prompt
+                },
+                {
+                    "role": "user",
+                    "content": query
+                }
+            ],
+            temperature=1,
+            max_completion_tokens=1024,
+            top_p=1,
+            stream=True,
+            stop=None,
         )
-        response_text:str= response.text.strip()  # type: ignore
 
-        self.history.append((query, response_text))
+        response_text = ""
+        for chunk in completion:
+            response_text += chunk.choices[0].delta.content or ""
+
+        self.history.append((query, response_text.strip()))
+
         print("\n" + "="*60)
         print("Conversation History")
         print("="*60)
@@ -60,5 +76,6 @@ class ChatbotModel:
         print("="*60 + "\n")
 
         if len(self.history) > self.max_history:
-            self.history = self.history[-self.max_history :]
-        return response_text
+            self.history = self.history[-self.max_history:]
+
+        return response_text.strip()
