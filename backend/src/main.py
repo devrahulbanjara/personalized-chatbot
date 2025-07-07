@@ -30,7 +30,7 @@ app = FastAPI(title="Personal Chatbot API")
 # CORS configuration
 origins = [
     "http://localhost",
-    "http://localhost:8501",
+    "http://localhost:8080",
 ]
 
 app.add_middleware(

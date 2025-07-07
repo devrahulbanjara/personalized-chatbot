@@ -424,25 +424,6 @@ wheels = [
 ]
 
 [[package]]
-name = "google-genai"
-version = "1.22.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anyio" },
-    { name = "google-auth" },
-    { name = "httpx" },
-    { name = "pydantic" },
-    { name = "requests" },
-    { name = "tenacity" },
-    { name = "typing-extensions" },
-    { name = "websockets" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/34/37/98742eeae25556d7558f336f9cdbb8e7276d32a5699b03cabc3ffa9f12ea/google_genai-1.22.0.tar.gz", hash = "sha256:1ece195e7be97cb94dbecce43dd88e3f4e376afd31045e54d1dd0ef272a6ee6b", size = 221720, upload-time = "2025-06-26T00:09:27.666Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f8/fa/ad39a0457a9c3e21438062076cc216d41c4f8b414aa3d2ec481c721ca5f7/google_genai-1.22.0-py3-none-any.whl", hash = "sha256:6627bea9451775a2af78c6cb1992f5a31b90c50d64fb1f1435a385737a69fce4", size = 222848, upload-time = "2025-06-26T00:09:25.955Z" },
-]
-
-[[package]]
 name = "googleapis-common-protos"
 version = "1.70.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1193,7 +1174,6 @@ source = { virtual = "." }
 dependencies = [
     { name = "chromadb" },
     { name = "fastapi" },
-    { name = "google-genai" },
     { name = "groq" },
     { name = "pydantic" },
     { name = "pymupdf" },
@@ -1208,7 +1188,6 @@ dependencies = [
 requires-dist = [
     { name = "chromadb", specifier = "==1.0.13" },
     { name = "fastapi", specifier = "==0.110.0" },
-    { name = "google-genai", specifier = "==1.22.0" },
     { name = "groq", specifier = ">=0.29.0" },
     { name = "pydantic", specifier = "==2.11.7" },
     { name = "pymupdf", specifier = "==1.26.1" },
