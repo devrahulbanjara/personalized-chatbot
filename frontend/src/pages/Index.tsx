@@ -17,6 +17,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const sessionIdRef = useRef<string>('');
 
   const {
     transcript,
@@ -37,8 +38,16 @@ const Index = () => {
       input.focus();
       const length = input.value.length;
       input.setSelectionRange(length, length);
+      input.scrollLeft = input.scrollWidth;
     }
   }, [inputValue, listening]);
+
+  useEffect(() => {
+    // Generate a unique session ID when the component mounts
+    if (!sessionIdRef.current) {
+      sessionIdRef.current = crypto.randomUUID();
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,7 +72,10 @@ const Index = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: inputValue }),
+        body: JSON.stringify({
+          query: inputValue,
+          session_id: sessionIdRef.current,
+        }),
       });
 
       if (!response.ok) {
