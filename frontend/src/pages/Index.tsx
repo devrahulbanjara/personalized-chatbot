@@ -15,7 +15,7 @@ const Index = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hi, I am a support assisant chatbot for Jasper IT Solutions, how may i help you ?'
+      content: 'Hi, I am a support assisant chatbot for Jasper IT Solutions, how may I help you ?'
     }
   ]);
   const [inputValue, setInputValue] = useState('');
