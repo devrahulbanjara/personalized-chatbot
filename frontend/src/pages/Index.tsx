@@ -12,7 +12,12 @@ interface Message {
 
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: 'assistant',
+      content: 'Hi, I am a support assisant chatbot for Jasper IT Solutions, how may i help you ?'
+    }
+  ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -146,7 +151,7 @@ const Index = () => {
             This is a dummy frontend to test the working of the chatbot.
           </p>
           <p className="text-lg text-slate-500 mt-4 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            P.S. This is an official chatbot with knowledge of Adex.
+            P.S. This is an official chatbot with knowledge of Jasper IT Solutions.
           </p>
         </div>
       </div>
@@ -171,7 +176,7 @@ const Index = () => {
         <div className="flex items-center justify-between p-4 border-b border-slate-200/50">
           <div className="flex items-center space-x-3">
             <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            <h3 className="font-medium text-slate-800">Adex Intelligence</h3>
+            <h3 className="font-medium text-slate-800">Jasper Intelligence</h3>
           </div>
           <Button
             variant="ghost"
