@@ -31,15 +31,9 @@ async def startup_event():
     logger.info("Starting background task for session cleanup...")
     asyncio.create_task(orchestrator.cleanup_stale_sessions())
 
-
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
